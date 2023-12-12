@@ -43,15 +43,18 @@
 #define IJK_LOG_FATAL       ANDROID_LOG_FATAL
 #define IJK_LOG_SILENT      ANDROID_LOG_SILENT
 
+#define MIN_LOG_LEVEL IJK_LOG_WARN
+
 #ifdef EXTRA_LOG_PRINT
-#define VLOG(level, TAG, ...)    ffp_log_extra_vprint(level, TAG, __VA_ARGS__)
-#define ALOG(level, TAG, ...)    ffp_log_extra_print(level, TAG, __VA_ARGS__)
+#define VLOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) ffp_log_extra_vprint(level, TAG, __VA_ARGS__); } while(0)
+#define ALOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) ffp_log_extra_print(level, TAG, __VA_ARGS__); } while(0)
 #else
-#define VLOG(level, TAG, ...)    ((void)__android_log_vprint(level, TAG, __VA_ARGS__))
-#define ALOG(level, TAG, ...)    ((void)__android_log_print(level, TAG, __VA_ARGS__))
+#define VLOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) __android_log_vprint(level, TAG, __VA_ARGS__); } while(0)
+#define ALOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) __android_log_print(level, TAG, __VA_ARGS__); } while(0)
 #endif
 
-#else
+
+#else //#ifdef __ANDROID__
 
 #define IJK_LOG_UNKNOWN     0
 #define IJK_LOG_DEFAULT     1
@@ -64,12 +67,15 @@
 #define IJK_LOG_FATAL       7
 #define IJK_LOG_SILENT      8
 
-#define VLOG(level, TAG, ...)    ((void)vprintf(__VA_ARGS__))
-#define ALOG(level, TAG, ...)    ((void)printf(__VA_ARGS__))
+#define MIN_LOG_LEVEL IJK_LOG_WARN
 
-#endif
+#define VLOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) ((void)vprintf(__VA_ARGS__)); } while(0)
+#define ALOG(level, TAG, ...)    do { if(level >= MIN_LOG_LEVEL) ((void)printf(__VA_ARGS__)); } while(0)
 
-#define IJK_LOG_TAG "IJKMEDIA"
+#endif //#ifdef __ANDROID__
+
+
+#define IJK_LOG_TAG "MediaPlayer"
 
 #define VLOGV(...)  VLOG(IJK_LOG_VERBOSE,   IJK_LOG_TAG, __VA_ARGS__)
 #define VLOGD(...)  VLOG(IJK_LOG_DEBUG,     IJK_LOG_TAG, __VA_ARGS__)
