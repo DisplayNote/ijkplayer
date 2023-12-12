@@ -116,8 +116,8 @@ publishing {
     }
 }
 
-signing {
-    if (isReleaseVersion) {
-        sign publishing.publications.aar
-    }
-}
+// signing {
+//     if (isReleaseVersion) {
+//         sign publishing.publications.aar
+//     }
+// }
