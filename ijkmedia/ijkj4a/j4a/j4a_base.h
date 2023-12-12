@@ -31,18 +31,20 @@
 #define J4A_UNUSED(x) x __attribute__((unused))
 #endif
 
-#define J4A_LOG_TAG "J4A"
-#define J4A_VLOGV(...)  __android_log_vprint(ANDROID_LOG_VERBOSE,   J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_VLOGD(...)  __android_log_vprint(ANDROID_LOG_DEBUG,     J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_VLOGI(...)  __android_log_vprint(ANDROID_LOG_INFO,      J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_VLOGW(...)  __android_log_vprint(ANDROID_LOG_WARN,      J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_VLOGE(...)  __android_log_vprint(ANDROID_LOG_ERROR,     J4A_LOG_TAG, __VA_ARGS__)
+#define J4A_MIN_LOG_LEVEL ANDROID_LOG_WARN
 
-#define J4A_ALOGV(...)  __android_log_print(ANDROID_LOG_VERBOSE,    J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_ALOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,      J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_ALOGI(...)  __android_log_print(ANDROID_LOG_INFO,       J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_ALOGW(...)  __android_log_print(ANDROID_LOG_WARN,       J4A_LOG_TAG, __VA_ARGS__)
-#define J4A_ALOGE(...)  __android_log_print(ANDROID_LOG_ERROR,      J4A_LOG_TAG, __VA_ARGS__)
+#define J4A_LOG_TAG "J4A"
+#define J4A_VLOGV(...)  do { if(ANDROID_LOG_VERBOSE >= J4A_MIN_LOG_LEVEL) __android_log_vprint(ANDROID_LOG_VERBOSE,   J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_VLOGD(...)  do { if(ANDROID_LOG_DEBUG >= J4A_MIN_LOG_LEVEL)   __android_log_vprint(ANDROID_LOG_DEBUG,     J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_VLOGI(...)  do { if(ANDROID_LOG_INFO >= J4A_MIN_LOG_LEVEL)    __android_log_vprint(ANDROID_LOG_INFO,      J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_VLOGW(...)  do { if(ANDROID_LOG_WARN >= J4A_MIN_LOG_LEVEL)    __android_log_vprint(ANDROID_LOG_WARN,      J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_VLOGE(...)  do { if(ANDROID_LOG_ERROR >= J4A_MIN_LOG_LEVEL)   __android_log_vprint(ANDROID_LOG_ERROR,     J4A_LOG_TAG, __VA_ARGS__); } while(0)
+
+#define J4A_ALOGV(...)  do { if(ANDROID_LOG_VERBOSE >= J4A_MIN_LOG_LEVEL) __android_log_print(ANDROID_LOG_VERBOSE,    J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_ALOGD(...)  do { if(ANDROID_LOG_DEBUG >= J4A_MIN_LOG_LEVEL)   __android_log_print(ANDROID_LOG_DEBUG,      J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_ALOGI(...)  do { if(ANDROID_LOG_INFO >= J4A_MIN_LOG_LEVEL)    __android_log_print(ANDROID_LOG_INFO,       J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_ALOGW(...)  do { if(ANDROID_LOG_WARN >= J4A_MIN_LOG_LEVEL)    __android_log_print(ANDROID_LOG_WARN,       J4A_LOG_TAG, __VA_ARGS__); } while(0)
+#define J4A_ALOGE(...)  do { if(ANDROID_LOG_ERROR >= J4A_MIN_LOG_LEVEL)   __android_log_print(ANDROID_LOG_ERROR,      J4A_LOG_TAG, __VA_ARGS__); } while(0)
 
 #define J4A_FUNC_FAIL_TRACE()               do {J4A_ALOGE("%s: failed\n", __func__);} while (0)
 #define J4A_FUNC_FAIL_TRACE1(x__)           do {J4A_ALOGE("%s: failed: %s\n", __func__, x__);} while (0)
