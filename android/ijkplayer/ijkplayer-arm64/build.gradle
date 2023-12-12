@@ -61,7 +61,7 @@ ext.isReleaseVersion = !libVersion.endsWith("SNAPSHOT")
 publishing {
     publications {
         aar(MavenPublication) {
-            groupId 'com.tencent.iot.thirdparty.android'
+            groupId 'com.displaynote.thirdparty.android'
             artifactId 'ijkplayer-arm64'
             version libVersion
             artifact(androidSourcesJar)
@@ -70,25 +70,14 @@ publishing {
 
             pom {
                 name = 'ijkplayer'
-                description = 'Tencent Link Android library'
-                url = 'https://github.com/tencentyun/iot-ijkplayer'
-                licenses {
-                    license {
-                        name = 'Tencent Binary License'
-                        url = 'https://github.com/tencentyun/iot-link-android/blob/master/explorer-link-android/LICENSE'
-                    }
-                }
+                description = 'DisplayNote Link Android library'
+                url = 'https://github.com/DisplayNote/ijkplayer'
                 developers {
                     developer {
-                        id = 'tencent_archurtan'
-                        name = 'Tencent archurtan'
-                        email = 'archurtan@tencent.com'
+                        id = 'forlayo'
+                        name = 'Miguel del Amor'
+                        email = 'miguel.delamor@displaynote.com'
                     }
-                }
-                scm {
-                    url = 'scm:git@github.com:tencentyun/iot-ijkplayer.git'
-                    connection = 'scm:git@github.com:tencentyun/iot-ijkplayer.git'
-                    developerConnection = 'scm:git@github.com:tencentyun/iot-ijkplayer.git'
                 }
             }
 
@@ -117,12 +106,11 @@ publishing {
     }
     repositories {
         maven {
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = libVersion.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            name = "DisplayNoteArtifactory"
+            url = uri(System.getenv("AAR_DEPLOYER_URL"))
             credentials {
-                username = System.getenv("IOT_SONATYPE_USERNAME")
-                password = System.getenv("IOT_SONATYPE_PASSWORD")
+                username = System.getenv("AAR_DEPLOYER_USERNAME")
+                password = System.getenv("AAR_DEPLOYER_PASSWORD")
             }
         }
     }
