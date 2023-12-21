@@ -88,7 +88,9 @@ esac
 
 case "$UNAME_S" in
     Darwin)
-        export IJK_MAKE_FLAG=-j`sysctl -n machdep.cpu.thread_count`
+        # Forcing only 1 thread due to build error on MacOS which was caused becasue of multithreading
+        # More details here: https://github.com/bilibili/ijkplayer/issues/5113#issuecomment-1288378800
+        export IJK_MAKE_FLAG=-j1
     ;;
     CYGWIN_NT-*)
         IJK_WIN_TEMP="$(cygpath -am /tmp)"
