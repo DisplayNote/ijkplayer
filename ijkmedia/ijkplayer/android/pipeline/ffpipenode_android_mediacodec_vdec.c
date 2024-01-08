@@ -2060,7 +2060,9 @@ IJKFF_Pipenode *ffpipenode_create_video_decoder_from_android_mediacodec(FFPlayer
     }
 
     jsurface = ffpipeline_get_surface_as_global_ref(env, pipeline);
-    ret = reconfigure_codec_l(env, node, jsurface);
+    // Not calling reconfigure because don't want to stop non-started codec in order to 
+    // reassign the surface
+    ret = configure_codec_l(env, node, jsurface);
     J4A_DeleteGlobalRef__p(env, &jsurface);
     if (ret != 0)
         goto fail;
